@@ -131,3 +131,29 @@ Follow the following steps to get the project set up on your local machine.
 -   If there is an existing link between the two nodes, clicking the button will unlink them. If there isn't an existing link, clicking the button will create a link between them.
 
 ---
+
+## Code Reusability
+
+The current version of the component includes advanced features such as adding new nodes, deleting nodes, and linking/unlinking nodes. These features are integrated into a cohesive implementation where additional state management props are passed to the component to facilitate data communication between child and parent components.
+
+For enhanced code reusability, a stripped-down version of the component, `ForceDirectedGraphReusable.jsx`, has been created. This version includes fundamental features such as rendering nodes and links, draggable nodes, and tooltips on hover. It requires only a single prop, `data`, to function.
+
+The expected structure of the data prop is as follows:
+
+```javascript
+const data = {
+    nodes: [
+        { id: 1, label: "Node 1", gender: "male" },
+        { id: 2, label: "Node 2", gender: "female" },
+        // Add more nodes as needed
+    ],
+    links: [
+        { source: 1, target: 2, value: 10 }, // Links node with id 1 to node with id 2
+        // Add more links as needed
+    ],
+};
+```
+
+> Note: The gender property of nodes must be either "male" or "female".
+
+This version of the component provides a streamlined implementation, making it easy to integrate into your projects with minimal setup and configuration.
