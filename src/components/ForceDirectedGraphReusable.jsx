@@ -1,7 +1,6 @@
 // Imports
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
-import styles from "./ForceDirectedGraph.module.css";
 
 const ForceDirectedGraphReusable = ({ data }) => {
     const containerRef = useRef(null);
@@ -53,7 +52,7 @@ const ForceDirectedGraphReusable = ({ data }) => {
             .select("body")
             .append("div")
             // Attach class for custom css styling
-            .attr("class", styles.tooltip);
+            .attr("class", "tooltip");
 
         // Create the nodes
         const node = svg

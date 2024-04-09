@@ -1,7 +1,6 @@
 // Imports
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
-import styles from "./ForceDirectedGraph.module.css";
 
 const ForceDirectedGraph = ({
     data,
@@ -59,7 +58,7 @@ const ForceDirectedGraph = ({
             .select("body")
             .append("div")
             // Attach class for custom css styling
-            .attr("class", styles.tooltip);
+            .attr("class", "tooltip");
 
         // Create the nodes
         const node = svg
