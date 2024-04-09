@@ -6,28 +6,27 @@ import "./App.css";
 
 function App() {
     const [nodeId, setNodeId] = useState("");
+    const [nodeLabel, setNodeLabel] = useState("");
     const [nodeGender, setNodeGender] = useState("male");
     const [selectedNode, setSelectedNode] = useState({});
     const [linkNodeList, setLinkNodeList] = useState([]);
     const [linkStatus, setLinkStatus] = useState(null);
     const [data, setData] = useState({
         nodes: [
-            { id: "A", gender: "male" },
-            { id: "B", gender: "female" },
-            { id: "C", gender: "male" },
-            { id: "D", gender: "male" },
-            { id: "E", gender: "female" },
-            { id: "F", gender: "male" },
+            { id: 1, label: "A", gender: "male" },
+            { id: 2, label: "B", gender: "female" },
+            { id: 3, label: "C", gender: "male" },
+            { id: 4, label: "D", gender: "male" },
+            { id: 5, label: "E", gender: "female" },
+            { id: 6, label: "F", gender: "male" },
         ],
         links: [
-            { source: "A", target: "B", value: 2 },
-            { source: "B", target: "C", value: 3 },
-            { source: "C", target: "D", value: 2 },
-            { source: "D", target: "E", value: 3 },
-            { source: "E", target: "A", value: 5 },
-            { source: "E", target: "B", value: 2 },
-            { source: "E", target: "C", value: 4 },
-            { source: "F", target: "A", value: 2 },
+            { source: 1, target: 2, value: 2 },
+            { source: 2, target: 3, value: 3 },
+            { source: 3, target: 4, value: 2 },
+            { source: 4, target: 5, value: 4 },
+            { source: 5, target: 6, value: 3 },
+            { source: 6, target: 1, value: 2 },
         ],
     });
 
@@ -49,22 +48,33 @@ function App() {
 
     // Function to add a new node to the graph
     const addNode = () => {
+        // Turn nodeId to type Number
+        const numericNodeId = Number(nodeId);
+
         // Check if nodeId is empty
-        if (!nodeId) return alert("Please enter an ID");
+        if (!numericNodeId) return alert("Please enter an ID");
+
+        // Check if nodeLabel is empty
+        if (!nodeLabel) return alert("Please enter a label");
 
         // Check if the id is already in use
         const existingIds = data.nodes.map((node) => node.id);
-        if (existingIds.includes(nodeId)) return alert("ID already in use");
+        if (existingIds.includes(numericNodeId))
+            return alert("ID already in use");
 
         // Add the new node to the data
         setData({
             ...data,
-            nodes: [...data.nodes, { id: nodeId, gender: nodeGender }],
+            nodes: [
+                ...data.nodes,
+                { id: numericNodeId, label: nodeLabel, gender: nodeGender },
+            ],
         });
 
         // Reset the input values
         setNodeId("");
-        setNodeGender("");
+        setNodeLabel("");
+        setNodeGender("male"); // Default - "male"
     };
 
     // Function to link two nodes in the graph
@@ -136,7 +146,7 @@ function App() {
                 linkNodeList={linkNodeList}
                 setLinkNodeList={setLinkNodeList}
             />
-            <div className="w-[800px] h-48 flex gap-2">
+            <div className="w-[800px] h-56 flex gap-2">
                 <div className="w-52 bg-white flex flex-col justify-between p-4 rounded-md">
                     <p className="font-bold text-lg text-center">
                         Add New Node
@@ -145,11 +155,22 @@ function App() {
                         <label htmlFor="nodeId">ID: </label>
                         <input
                             id="nodeId"
-                            type="text"
+                            type="number"
                             onChange={(e) => setNodeId(e.target.value)}
                             value={nodeId}
-                            className="w-24 border-2 border-neutral-400 rounded-md px-2"
+                            className="w-28 border-2 border-neutral-400 rounded-md px-2"
                             placeholder="Enter ID"
+                        />
+                    </div>
+                    <div className="flex justify-between">
+                        <label htmlFor="nodeLabel">Label: </label>
+                        <input
+                            id="nodeLabel"
+                            type="text"
+                            onChange={(e) => setNodeLabel(e.target.value)}
+                            value={nodeLabel}
+                            className="w-28 border-2 border-neutral-400 rounded-md px-2"
+                            placeholder="Enter Label"
                         />
                     </div>
                     <div className="flex justify-between">
@@ -158,7 +179,7 @@ function App() {
                             id="dropdown"
                             value={nodeGender}
                             onChange={(e) => setNodeGender(e.target.value)}
-                            className="w-24 border-2 border-neutral-400 rounded-md px-2"
+                            className="w-28 border-2 border-neutral-400 rounded-md px-2"
                         >
                             <option value="male">male</option>
                             <option value="female">female</option>
@@ -180,6 +201,14 @@ function App() {
                         <p>
                             {Object.keys(selectedNode).length !== 0
                                 ? selectedNode.id
+                                : "None"}
+                        </p>
+                    </div>
+                    <div className="flex justify-between">
+                        <p>Label:</p>
+                        <p>
+                            {Object.keys(selectedNode).length !== 0
+                                ? selectedNode.label
                                 : "None"}
                         </p>
                     </div>

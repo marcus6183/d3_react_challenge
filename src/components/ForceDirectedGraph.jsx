@@ -35,9 +35,12 @@ const ForceDirectedGraph = ({
             .forceSimulation(data.nodes)
             .force(
                 "link",
-                d3.forceLink(data.links).id((d) => d.id)
+                d3
+                    .forceLink(data.links)
+                    .id((d) => d.id)
+                    .distance(50)
             )
-            .force("charge", d3.forceManyBody().strength(-400))
+            .force("charge", d3.forceManyBody().strength(-100))
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         // Create the links
@@ -124,7 +127,7 @@ const ForceDirectedGraph = ({
                 tooltip.transition().duration(200).style("opacity", 0.8);
                 tooltip
                     .html(
-                        `<strong>ID:</strong> ${d.id}<br><strong>Gender:</strong> ${d.gender}`
+                        `<strong>ID:</strong> ${d.id}<br><strong>Label:</strong> ${d.label}<br><strong>Gender:</strong> ${d.gender}`
                     )
                     .style("left", event.pageX + 20 + "px")
                     .style("top", event.pageY + "px");
